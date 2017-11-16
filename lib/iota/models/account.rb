@@ -9,6 +9,10 @@ module IOTA
         @utils = client.utils
         @seed = seed.class == String ? Seed.new(seed) : seed
 
+        reset
+      end
+
+      def reset
         @latestAddress = nil
         @addresses = []
         @transfers = []
@@ -17,6 +21,7 @@ module IOTA
       end
 
       def getAccountDetails(options = {})
+        reset
         options = symbolize_keys(options)
         startIndex = options[:start] || 0
         endIndex = options[:end] || nil
