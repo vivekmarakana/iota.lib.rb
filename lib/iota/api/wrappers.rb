@@ -146,7 +146,7 @@ module IOTA
           end
 
           # Get tail transactions for each nonTail via the bundle hash
-          findTransactionObjects(bundles: nonTailBundleHashes) do |st1, trxObjects|
+          findTransactionObjects(bundles: nonTailBundleHashes.uniq) do |st1, trxObjects|
             if !st1
               return sendData(false, trxObjects, &callback)
             end
@@ -156,18 +156,15 @@ module IOTA
             end
 
             finalBundles = []
+            tailTransactions = tailTransactions.uniq
             tailTxStates = []
 
             # If inclusionStates, get the confirmation status of the tail transactions, and thus the bundles
-            if inclusionStates
+            if inclusionStates && tailTransactions.length > 0
               getLatestInclusion(tailTransactions) do |st2, states|
                 # If error, return it to original caller
                 if !status
                   return sendData(false, states, &callback)
-                end
-
-                if states.nil?
-                  return sendData(false, "Failed to get `inclusionStates`. Please try again.", &callback)
                 end
 
                 tailTxStates = states

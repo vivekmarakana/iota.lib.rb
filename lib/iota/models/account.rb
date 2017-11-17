@@ -222,7 +222,7 @@ module IOTA
             # Case 2: Get inputs deterministically
             # If no inputs provided, derive the addresses from the seed and
             # confirm that the inputs exceed the threshold
-            self.getAccountDetails
+            self.getAccountDetails(security: security)
             return addRemainder(@inputs, totalValue, bundle, tag, security, signatureFragments, remainderAddress, hmacKey)
           end
         else
