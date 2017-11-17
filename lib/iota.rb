@@ -52,13 +52,14 @@ module IOTA
       @provider = settings[:provider] || @host.gsub(/\/$/, '') + ":" + @port.to_s
       @sandbox = settings[:sandbox] || false
       @token = settings[:token] || false
+      @timeout = settings[:timeout] || 120
 
       if @sandbox
         @sandbox = @provider.gsub(/\/$/, '')
         @provider = @sandbox + '/commands'
       end
 
-      @broker = IOTA::Utils::Broker.new(@provider, @token)
+      @broker = IOTA::Utils::Broker.new(@provider, @token, @timeout)
       @api = IOTA::API::Api.new(@broker, @sandbox)
     end
 
