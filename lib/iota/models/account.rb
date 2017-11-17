@@ -111,6 +111,8 @@ module IOTA
         chosenInputs = chosenInputs || []
         security = options[:security] || 2
 
+        remainderAddress = @utils.noChecksum(remainderAddress) if remainderAddress && remainderAddress.length == 90
+
         # Create a new bundle
         bundle = IOTA::Crypto::Bundle.new
 
