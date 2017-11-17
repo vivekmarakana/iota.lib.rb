@@ -59,7 +59,7 @@ Overall, there are currently four subclasses that are accessible from the IOTA o
 
 ## How to use the Library
 
-All API calls are executed **synchronously**. However, you can use it by passing block to it or reading response.
+All API calls are executed **synchronously** and returns array with 2 entries. First entry is `status` and second is `data`. However, you can use it by passing block to it as well.
 
 Here is a simple example of how to access the `getNodeInfo` function:
 
@@ -84,4 +84,4 @@ else
 end
 ```
 
-If you'd like to support development, please consider donating to my IOTA address: **HHNHBHUSCKMRNSXYIKLUUTGPRKHVREDUYXYFQFWSJLZCNU9ORK9RBYERWNFKRNILZVRGSWSNZJEDKETIAICGQGBBDC**
+If you'd like to support development, please consider donating to my IOTA address: **YPQDEJCJFRXVPGZKVLZFTGQYWEFSPLYEA9STGEVGDJDCVYCMGEZAJQRPVXFXQQRTKQRKROSHSFPSLHNP9UQFCKKGTZ**
