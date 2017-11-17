@@ -223,6 +223,9 @@ module IOTA
             # If no inputs provided, derive the addresses from the seed and
             # confirm that the inputs exceed the threshold
             self.getAccountDetails(security: security)
+
+            raise StandardError, "Not enough balance" if totalValue > @balance
+
             return addRemainder(@inputs, totalValue, bundle, tag, security, signatureFragments, remainderAddress, hmacKey)
           end
         else
