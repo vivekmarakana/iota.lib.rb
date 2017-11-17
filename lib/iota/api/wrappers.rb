@@ -166,6 +166,10 @@ module IOTA
                   return sendData(false, states, &callback)
                 end
 
+                if states.nil?
+                  return sendData(false, "Failed to get `inclusionStates`. Please try again.", &callback)
+                end
+
                 tailTxStates = states
               end
             end
