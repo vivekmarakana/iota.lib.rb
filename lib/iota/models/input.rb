@@ -1,7 +1,7 @@
 module IOTA
   module Models
     class Input < Base
-      attr_reader :address, :keyIndex, :security, :balance
+      attr_accessor :address, :keyIndex, :security, :balance
 
       def initialize(options)
         utils = IOTA::Utils::Utils.new

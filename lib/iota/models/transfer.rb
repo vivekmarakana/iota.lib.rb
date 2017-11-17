@@ -1,7 +1,7 @@
 module IOTA
   module Models
     class Transfer < Base
-      attr_reader :address, :message, :obsoleteTag, :value, :hmacKey
+      attr_accessor :address, :message, :obsoleteTag, :value, :hmacKey
 
       def initialize(options)
         @utils = IOTA::Utils::Utils.new
