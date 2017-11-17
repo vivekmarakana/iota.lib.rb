@@ -28,12 +28,6 @@ module IOTA
           raise ArgumentError, "Invalid unit provided"
         end
 
-        afterComma = value.to_s.match(/\.([\d]+)$/);
-
-        if afterComma && afterComma[1].length > UNIT_MAP[fromUnit].to_s.length - 1
-          raise ArgumentError, "Too many digits after comma"
-        end
-
         # If not valid value, throw error
         if !@validator.isNum(value)
           raise ArgumentError, "Invalid value"
