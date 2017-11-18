@@ -173,19 +173,17 @@ module IOTA
 
             tailTransactions.each do |tailTx|
               getBundle(tailTx) do |st2, bundleTransactions|
-                if !st2
-                  return sendData(false, bundleTransactions, &callback)
-                end
+                if st2
+                  if inclusionStates
+                    thisInclusion = tailTxStates[tailTransactions.index(tailTx)]
 
-                if inclusionStates
-                  thisInclusion = tailTxStates[tailTransactions.index(tailTx)]
-
-                  bundleTransactions.each do |bundleTx|
-                    bundleTx.persistence = thisInclusion
+                    bundleTransactions.each do |bundleTx|
+                      bundleTx.persistence = thisInclusion
+                    end
                   end
-                end
 
-                finalBundles << IOTA::Models::Bundle.new(bundleTransactions)
+                  finalBundles << IOTA::Models::Bundle.new(bundleTransactions)
+                end
               end
             end
             # Sort bundles by attachmentTimestamp

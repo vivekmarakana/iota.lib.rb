@@ -26,7 +26,7 @@ module IOTA
 
         return nil if firstTrytePair != "OD"
 
-        index =0
+        index = 0
         notEnded = true
         trytesChunk = ''
         trytesChecked = 0
