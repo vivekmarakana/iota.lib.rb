@@ -20,7 +20,7 @@ module IOTA
         @balance = 0.0
       end
 
-      def getAccountDetails(options = {})
+      def getAccountDetails(options = {}, fetchInputs = true, fetchTransfers = true)
         reset
         options = symbolize_keys(options)
         startIndex = options[:start] || 0
@@ -51,17 +51,9 @@ module IOTA
         # remove the last element as that is the most recent address
         @addresses = addresses.slice(0, addresses.length)
 
-        # get all bundles from a list of addresses
-        @api.bundlesFromAddresses(addresses, true) do |status1, bundlesData|
-          if !status1
-            raise StandardError, bundlesData
-          end
-
-          # add all transfers
-          @transfers = bundlesData
-
+        if fetchInputs
           # Get the correct balance count of all addresses
-          @api.getBalances(@addresses, 100) do |status2, balancesData|
+          @api.getBalances(addresses, 100) do |status2, balancesData|
             if !status2
               raise StandardError, balancesData
             end
@@ -82,7 +74,29 @@ module IOTA
           end
         end
 
+        if fetchTransfers
+          # get all bundles from a list of addresses
+          @api.bundlesFromAddresses(addresses, true) do |status1, bundlesData|
+            if !status1
+              raise StandardError, bundlesData
+            end
+
+            # add all transfers
+            @transfers = bundlesData
+          end
+        end
+
         self
+      end
+
+      def getInputs(options = {})
+        self.getAccountDetails(options, true, false)
+        @inputs
+      end
+
+      def getTransfers(options = {})
+        self.getAccountDetails(options, false, true)
+        @transfers
       end
 
       def prepareTransfers(transfers, options = {})
@@ -222,7 +236,7 @@ module IOTA
             # Case 2: Get inputs deterministically
             # If no inputs provided, derive the addresses from the seed and
             # confirm that the inputs exceed the threshold
-            self.getAccountDetails(security: security)
+            self.getInputs(security: security)
 
             raise StandardError, "Not enough balance" if totalValue > @balance
 
