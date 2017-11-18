@@ -373,7 +373,7 @@ module IOTA
             end
           else
             # If multiple inputs provided, subtract the totalTransferValue by the inputs balance
-            totalTransferValue -= thisBalance
+            totalTransferValue -= balance
           end
         end
       end
