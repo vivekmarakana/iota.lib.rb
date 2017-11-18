@@ -14,7 +14,8 @@ module IOTA
         if state
           @state = state
         else
-          @state = Array.new(STATE_LENGTH, 0)
+          @state = []
+          STATE_LENGTH.times {|a| @state << 0}
         end
       end
 
@@ -24,8 +25,14 @@ module IOTA
 
       def absorb(trits, offset, length)
         loop do
+          i = 0
           limit = length < HASH_LENGTH ? length : HASH_LENGTH
-          @state[0...limit] = trits[offset...offset+limit]
+
+          while i < limit
+            @state[i] = trits[offset]
+            i += 1
+            offset += 1
+          end
 
           transform
           length -= HASH_LENGTH
@@ -36,8 +43,13 @@ module IOTA
 
       def squeeze(trits, offset, length)
         loop do
+          i = 0
           limit = length < HASH_LENGTH ? length : HASH_LENGTH
-          trits[offset...offset+limit] = @state[0...limit]
+          while i < limit
+            trits[offset] = @state[i]
+            i += 1
+            offset += 1
+          end
 
           transform
           length -= HASH_LENGTH
