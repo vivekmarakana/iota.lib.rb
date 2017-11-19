@@ -6,6 +6,7 @@ This is the **unofficial** Ruby gem for the IOTA Core. It implements both the [o
 
 This gem is a **beta release**. If you find any bug or face issue, please [post it here](https://github.com/vivekmarakana/iota.lib.rb/issues).
 
+**Note: This release does not have multi signature support. It will be added after successful testing of this version**
 
 ## Installation
 
