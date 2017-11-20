@@ -4,7 +4,7 @@ module IOTA
       def getTransactionsObjects(hashes, &callback)
         # If not array of hashes, return error
         if !@validator.isArrayOfHashes(hashes)
-          return sendData(false, "Invalid Trytes provided", &callback)
+          return sendData(false, "Invalid inputs provided", &callback)
         end
 
         ret_status = false
