@@ -264,6 +264,8 @@ module IOTA
         bundleHash = nil
         signatureFragments = []
 
+        signedBundle = signedBundle.transactions if signedBundle.class == IOTA::Models::Bundle
+
         (0...signedBundle.length).step(1) do |i|
           if signedBundle[i].address == inputAddress
             bundleHash = signedBundle[i].bundle
