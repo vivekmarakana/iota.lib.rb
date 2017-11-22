@@ -302,7 +302,7 @@ module IOTA
         # and return the list of all addresses
         if total
             # Increase index with each iteration
-            (i...total).step(1) do |i|
+            (0...total).step(1) do |i|
               address = @seed.getAddress(index, security, checksum)
               allAddresses << address
               index += 1
