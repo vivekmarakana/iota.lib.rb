@@ -31,11 +31,11 @@ module IOTA
       end
 
       def findTransactionObjects(input, &callback)
-        findTransactions(input) do |status, trytes|
+        findTransactions(input) do |status, transactions|
           if !status
-            return sendData(status, trytes, &callback)
+            return sendData(status, transactions, &callback)
           else
-            return getTransactionsObjects(trytes, &callback)
+            return getTransactionsObjects(transactions, &callback)
           end
         end
       end
