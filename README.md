@@ -55,7 +55,7 @@ Overall, there are currently four subclasses that are accessible from the IOTA o
 - **`api`**: Core API functionality for interacting with the IOTA core.
 - **`utils`**: Utility related functions for conversions, validation and so on
 - **`validator`**: Validator functions that can help with determining whether the inputs or results that you get are valid.
-- **`multisig`**: *In progress*
+- **`multisig`**: Functions for creating and signing multi-signature addresses and transactions.
 
 
 ## How to use the Library
