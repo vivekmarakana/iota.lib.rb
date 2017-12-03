@@ -13,7 +13,7 @@ This gem is a **beta release**. If you find any bug or face issue, please [post 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'iota-ruby', '~> 1.0.1', require: 'iota'
+gem 'iota-ruby', github: 'vivekmarakana/iota.lib.rb', branch: 'master', require: 'iota'
 ```
 
 And then execute:
