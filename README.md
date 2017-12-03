@@ -85,4 +85,4 @@ else
 end
 ```
 
-If you'd like to support development, please consider donating to my IOTA address: **XKMGCINWPKQIGXPUXCJGMQGVAXPTRTBRCVXAFBWZWISLTAADBBRHI9LYFTKTNFJVLBKFKYECBSOEOXJXWIPDVCHYSD**
+If you'd like to support development, please consider donating to my IOTA address: **LOBYBAFIKJFEGTLCCQSHOPX9ROIRAI99QSTD9BRALHMHUOISF9DIZJYICXAIQMJCPZYTXMRMPOWG9WOICGMMNHQIH9**
