@@ -3,8 +3,16 @@ module IOTA
     class Bundle
       attr_reader :bundle
 
-      def initialize
-        @bundle = []
+      def initialize(bundle = [])
+        bundle = bundle.map do |b|
+          if b.class != IOTA::Models::Transaction
+            IOTA::Models::Transaction.new(b)
+          else
+            b
+          end
+        end
+
+        @bundle = bundle
       end
 
       def addEntry(signatureMessageLength, address, value, tag, timestamp)

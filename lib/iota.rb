@@ -18,6 +18,9 @@ require "iota/crypto/signing"
 require "iota/crypto/hmac"
 require "iota/crypto/private_key"
 
+require "iota/multisig/address"
+require "iota/multisig/multisig"
+
 require "iota/models/base"
 require "iota/models/input"
 require "iota/models/transfer"
@@ -34,7 +37,7 @@ module IOTA
       setSettings(settings)
       @utils = IOTA::Utils::Utils.new
       @validator = @utils.validator
-      @multisig = nil
+      @multisig = IOTA::Multisig::Multisig.new(self)
       # TODO: Implement MAM
       # TODO: Implement Flash Channel
     end
