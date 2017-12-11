@@ -16,7 +16,6 @@ module IOTA
       end
 
       def absorb(trits)
-        s = Time.now
         length  = trits.length
         offset  = 0
 
@@ -29,30 +28,22 @@ module IOTA
 
           offset += HASH_LENGTH
         end
-        puts "**absorb: #{(Time.now - s) * 1000.0}ms"
       end
 
       def squeeze(trits)
-        start = Time.now
         trits[0...HASH_LENGTH] = @state.slice(0, HASH_LENGTH)
         transform
-        puts "**squeeze: #{(Time.now - start) * 1000.0}ms"
       end
 
       def transform
         previousState  = @state.slice(0, @state.length)
         newState   = @state.slice(0, @state.length)
 
-        # Note: This code looks significantly different from the C
-        # implementation because it has been optimized to limit the number
-        # of list item lookups (these are relatively slow in Python).
         index = 0
         round = 0
         while round < @rounds
           previousTrit = previousState[index].to_i
 
-          a = Time.now
-          # (0...STATE_LENGTH).each do |pos|
           pos = 0
           while true
             index += (index < 365) ? 364 : -365
@@ -62,7 +53,6 @@ module IOTA
             pos += 1
             break if pos >= STATE_LENGTH
           end
-          # puts "loop took: #{(Time.now - a) * 1000.0}ms"
 
           previousState = newState
           newState = newState.slice(0, newState.length)
