@@ -15,8 +15,8 @@ class CurlTest < Minitest::Test
 
     # generate the correct transaction hash
     @curl.reset
-    @curl.absorb(transactionTrits, 0 , transactionTrits.length)
-    @curl.squeeze(hash, 0, 243)
+    @curl.absorb(transactionTrits)
+    @curl.squeeze(hash)
     hash = @converter.trytes(hash)
 
     assert expected_hash == hash

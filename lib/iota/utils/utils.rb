@@ -62,6 +62,7 @@ module IOTA
       end
 
       def transactionObject(trytes)
+        start = Time.now
         return if !trytes
 
         # validity check
@@ -73,12 +74,11 @@ module IOTA
         transactionTrits = IOTA::Crypto::Converter.trits(trytes)
         hash = []
 
-        curl = IOTA::Crypto::Curl.new
-
         # generate the correct transaction hash
-        curl.setup()
-        curl.absorb(transactionTrits, 0, transactionTrits.length)
-        curl.squeeze(hash, 0, 243)
+        curl = IOTA::Crypto::Curl.new
+        curl.absorb(transactionTrits)
+        curl.squeeze(hash)
+        puts "Took: #{(Time.now - start) * 1000.0}ms"
 
         trx['hash'] = IOTA::Crypto::Converter.trytes(hash)
         trx['signatureMessageFragment'] = trytes.slice(0, 2187)
