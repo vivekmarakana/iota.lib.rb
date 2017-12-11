@@ -10,3 +10,4 @@ Gemfile.lock
 /spec/reports/
 /tmp/
 .DS_Store
+**.bundle

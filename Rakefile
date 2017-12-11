@@ -1,5 +1,6 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
+require "rake/extensiontask"
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
@@ -7,4 +8,17 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList["test/**/*_test.rb"]
 end
 
-task :default => :test
+Rake::ExtensionTask.new "ccurl" do |ext|
+  ext.lib_dir = "lib/iota/crypto"
+end
+
+def can_compile_extensions
+  return false if RUBY_DESCRIPTION =~ /jruby/
+  return true
+end
+
+if can_compile_extensions
+  task :default => [:compile, :test]
+else
+  task :default => [:test]
+end
