@@ -9,7 +9,7 @@ Rake::TestTask.new(:test) do |t|
 end
 
 Rake::ExtensionTask.new "ccurl" do |ext|
-  ext.lib_dir = "lib/iota/crypto"
+  ext.lib_dir = "lib"
 end
 
 def can_compile_extensions

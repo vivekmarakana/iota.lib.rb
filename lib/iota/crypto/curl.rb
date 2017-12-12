@@ -1,4 +1,4 @@
-if File.file?(File.join(File.dirname(__FILE__), 'ccurl.bundle'))
+if File.file?(File.join(File.dirname(__FILE__), '../../ccurl.bundle'))
   require "iota/crypto/curl_c"
   BaseCurl = IOTA::Crypto::CCurl
 else

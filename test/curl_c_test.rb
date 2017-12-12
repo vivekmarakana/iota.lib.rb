@@ -1,5 +1,5 @@
 require "test_helper"
-if File.file?(File.join(File.dirname(__FILE__), '../lib/iota/crypto/ccurl.bundle'))
+if File.file?(File.join(File.dirname(__FILE__), '../lib/ccurl.bundle'))
   require "iota/crypto/curl_c"
 
   class CcurlTest < Minitest::Test

@@ -12,4 +12,4 @@ module IOTA
   end
 end
 
-require "iota/crypto/ccurl"
+require "ccurl"
