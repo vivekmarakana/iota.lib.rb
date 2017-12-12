@@ -10,6 +10,7 @@ require "iota/api/commands"
 require "iota/api/wrappers"
 require "iota/api/api"
 
+require "iota/crypto/c_curl"
 require "iota/crypto/curl"
 require "iota/crypto/kerl"
 require "iota/crypto/converter"
