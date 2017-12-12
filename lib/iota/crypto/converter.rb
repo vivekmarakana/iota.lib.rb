@@ -6,7 +6,7 @@ module IOTA
       MAX_TRIT_VALUE = 1
       MIN_TRIT_VALUE = -1
       BYTE_HASH_LENGTH = 48
-      HASH_LENGTH = IOTA::Crypto::Curl::HASH_LENGTH
+      HASH_LENGTH = Curl::HASH_LENGTH
 
       # All possible tryte values
       TRYTES_ALPHABET = "9ABCDEFGHIJKLMNOPQRSTUVWXYZ"

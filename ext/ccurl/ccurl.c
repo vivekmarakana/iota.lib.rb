@@ -7,7 +7,6 @@
 
 typedef int64_t trit_t;
 
-// Copied from https://github.com/iotaledger/ccurl/blob/master/src/lib/Curl.c
 #define __TRUTH_TABLE 1,  0, -1, 1, -1,  0, -1,  1,  0
 
 static const trit_t TRUTH_TABLE[9] = {__TRUTH_TABLE};
@@ -70,12 +69,7 @@ static VALUE ccurl_squeeze(VALUE self, VALUE data) {
   Curl *ctx;
   Data_Get_Struct(self, Curl, ctx);
 
-  int incoming_count;
-
-  // memcpy(&(((trit_t*)data)[0]), ctx->state, HASH_LENGTH * sizeof(trit_t));
-  // ccurl_transform(self);
-
-  int length = NUM2INT(rb_funcall(data, rb_intern("length"), 0, 0));
+  int incoming_count, length = NUM2INT(rb_funcall(data, rb_intern("length"), 0, 0));
 
   for(incoming_count = length; length < HASH_LENGTH; length++) {
     rb_ary_push(data, LONG2NUM(0));
@@ -94,7 +88,6 @@ static VALUE ccurl_transform(VALUE self) {
   Curl *ctx;
   Data_Get_Struct(self, Curl, ctx);
 
-  // Adapted from https://github.com/iotaledger/ccurl/blob/master/src/lib/Curl.c
   trit_t scratchpad[STATE_LENGTH];
   int round, scratchpadIndex=0, scratchpadIndexSave, stateIndex;
 

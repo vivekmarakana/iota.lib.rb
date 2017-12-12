@@ -1,9 +1,10 @@
 require "test_helper"
+require "iota/crypto/curl_ruby"
 
-class CcurlTest < Minitest::Test
+class RubyCurlTest < Minitest::Test
   def setup
     @converter = IOTA::Crypto::Converter
-    @curl = IOTA::Crypto::CCurl.new(81)
+    @curl = IOTA::Crypto::RubyCurl.new
   end
 
   def test_that_hash_works
@@ -19,7 +20,7 @@ class CcurlTest < Minitest::Test
     @curl.absorb(transactionTrits)
     @curl.squeeze(hash)
     hash = @converter.trytes(hash)
-    puts "C Curl time: #{(Time.now - start) * 1000.0}ms"
+    puts "Ruby Curl time: #{(Time.now - start) * 1000.0}ms"
 
     assert expected_hash == hash
   end
