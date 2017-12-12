@@ -1,4 +1,4 @@
-if File.file?(File.join(File.dirname(__FILE__), '../../ccurl.bundle'))
+if !Dir.glob(File.join(File.dirname(__FILE__), '../../ccurl.*')).empty?
   require "iota/crypto/curl_c"
   BaseCurl = IOTA::Crypto::CCurl
 else
