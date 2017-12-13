@@ -40,17 +40,17 @@ static VALUE ccurl_init(VALUE self, VALUE rounds) {
 }
 
 static VALUE ccurl_absorb(VALUE self, VALUE data) {
+  trit_t *trits;
+  int offset = 0;
+  int i;
+  int length = NUM2INT(rb_funcall(data, rb_intern("length"), 0, 0));
+
   Curl *ctx;
   Data_Get_Struct(self, Curl, ctx);
 
-  trit_t *trits;
-
-  int offset = 0;
-  int length = NUM2INT(rb_funcall(data, rb_intern("length"), 0, 0));
-
   trits = (trit_t*)malloc(length * sizeof(trit_t));
 
-  for (int i = 0; i < length; ++i) {
+  for (i = 0; i < length; ++i) {
     trits[i] = (trit_t)(NUM2LONG(rb_ary_entry(data, i)));
   }
 
@@ -66,16 +66,17 @@ static VALUE ccurl_absorb(VALUE self, VALUE data) {
 }
 
 static VALUE ccurl_squeeze(VALUE self, VALUE data) {
+  int length = NUM2INT(rb_funcall(data, rb_intern("length"), 0, 0));
+  int i;
+
   Curl *ctx;
   Data_Get_Struct(self, Curl, ctx);
 
-  int incoming_count, length = NUM2INT(rb_funcall(data, rb_intern("length"), 0, 0));
-
-  for(incoming_count = length; length < HASH_LENGTH; length++) {
+  for(; length < HASH_LENGTH; length++) {
     rb_ary_push(data, LONG2NUM(0));
   }
 
-  for (int i = 0; i < HASH_LENGTH; i++) {
+  for (i = 0; i < HASH_LENGTH; i++) {
     rb_ary_store(data, i, LONG2NUM(ctx->state[i]));
   }
 
@@ -85,11 +86,11 @@ static VALUE ccurl_squeeze(VALUE self, VALUE data) {
 }
 
 static VALUE ccurl_transform(VALUE self) {
-  Curl *ctx;
-  Data_Get_Struct(self, Curl, ctx);
-
   trit_t scratchpad[STATE_LENGTH];
   int round, scratchpadIndex=0, scratchpadIndexSave, stateIndex;
+
+  Curl *ctx;
+  Data_Get_Struct(self, Curl, ctx);
 
   for (round = 0; round < NUMBER_OF_ROUNDS; round++) {
     memcpy(scratchpad, ctx->state, STATE_LENGTH * sizeof(trit_t));
