@@ -433,7 +433,7 @@ module IOTA
 
         data = []
 
-        hashes.in_groups_of(batchSize, false) do |group|
+        hashes.each_slice(batchSize) do |group|
           getTrytes(group) do |status, trytes|
             if !status
               return sendData(false, trytes, &callback)
