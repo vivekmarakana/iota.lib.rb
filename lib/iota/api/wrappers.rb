@@ -67,13 +67,15 @@ module IOTA
         end
       end
 
-      def sendTrytes(trytes, depth, minWeightMagnitude, &callback)
+      def sendTrytes(trytes, depth, minWeightMagnitude, options = {}, &callback)
         # Check if correct depth and minWeightMagnitude
         if !@validator.isValue(depth) || !@validator.isValue(minWeightMagnitude)
           return sendData(false, "Invalid inputs provided", &callback)
         end
 
-        getTransactionsToApprove(depth) do |status, approval_data|
+        reference = options[:reference] || options['reference']
+
+        getTransactionsToApprove(depth, reference) do |status, approval_data|
           if !status
             return sendData(false, approval_data, &callback)
           end
@@ -213,7 +215,8 @@ module IOTA
         end
       end
 
-      def replayBundle(tail, depth, minWeightMagnitude, &callback)
+      # Replays or promote transactions based on tail consistency
+      def replayBundle(tail, depth, minWeightMagnitude, forcedReplay = false, &callback)
         # Check if correct tail hash
         if !@validator.isHash(tail)
           return sendData(false, "Invalid trytes provided", &callback)
@@ -224,17 +227,42 @@ module IOTA
           return sendData(false, "Invalid inputs provided", &callback)
         end
 
+        isPromatable = false
+        if !forcedReplay
+          checkConsistency([tail]) do |status, isConsistent|
+            isPromatable = status && isConsistent
+          end
+        end
+
         getBundle(tail) do |status, transactions|
           if !status
             return sendData(false, transactions, &callback)
           end
 
-          bundleTrytes = []
-          transactions.each do |trx|
-            bundleTrytes << @utils.transactionTrytes(trx);
-          end
+          if !isPromatable
+            bundleTrytes = []
+            transactions.each do |trx|
+              bundleTrytes << @utils.transactionTrytes(trx);
+            end
 
-          return sendTrytes(bundleTrytes.reverse, depth, minWeightMagnitude, &callback)
+            return sendTrytes(bundleTrytes.reverse, depth, minWeightMagnitude, &callback)
+          else
+            account = IOTA::Models::Account.new(nil, transactions.first.address, self, @validator, @utils)
+
+            transfers = [{
+              address: '9' * 81,
+              value: 0,
+              message: '',
+              tag: ''
+            }]
+
+            begin
+              account.sendTransfer(depth, minWeightMagnitude, transfers, { reference: tail })
+              return sendData(status, transactions, &callback)
+            rescue => e
+              return sendData(false, e.message, &callback)
+            end
+          end
         end
       end
 

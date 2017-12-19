@@ -97,7 +97,8 @@ module IOTA
           'findTransactions'      =>   'hashes',
           'getTrytes'             =>   'trytes',
           'getInclusionStates'    =>   'states',
-          'attachToTangle'        =>   'trytes'
+          'attachToTangle'        =>   'trytes',
+          'checkConsistency'      =>   'state'
         }
 
         # If correct result and we want to prepare the result

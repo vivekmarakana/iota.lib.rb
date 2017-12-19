@@ -60,11 +60,11 @@ module IOTA
         { command: 'getTips' }
       end
 
-      def getTransactionsToApprove(depth)
+      def getTransactionsToApprove(depth, reference = nil)
         {
           command: 'getTransactionsToApprove',
           depth: depth
-        }
+        }.merge(reference.nil? ? {} : { reference: reference })
       end
 
       def attachToTangle(trunkTransaction, branchTransaction, minWeightMagnitude, trytes)
@@ -92,6 +92,13 @@ module IOTA
         {
           command: 'storeTransactions',
           trytes: trytes
+        }
+      end
+
+      def checkConsistency(tails)
+        {
+          command: 'checkConsistency',
+          tails: tails
         }
       end
     end

@@ -3,10 +3,10 @@ module IOTA
     class Account < Base
       attr_reader :client, :seed, :latestAddress, :addresses, :transfers, :inputs, :balance
 
-      def initialize(client, seed)
-        @api = client.api
-        @validator = client.validator
-        @utils = client.utils
+      def initialize(client, seed, api = nil, validator = nil, utils = nil)
+        @api = client ? client.api : api
+        @validator = client ? client.validator : validator
+        @utils = client ? client.utils : utils
         @seed = seed.class == String ? Seed.new(seed) : seed
 
         reset
@@ -188,7 +188,7 @@ module IOTA
         end
 
         # Get inputs if we are sending tokens
-        if totalValue
+        if totalValue > 0
           #  Case 1: user provided inputs
           #
           #  Validate the inputs by calling getBalances
@@ -263,7 +263,8 @@ module IOTA
         end
 
         trytes = prepareTransfers(transfers, options)
-        @api.sendTrytes(trytes, depth, minWeightMagnitude) do |status, data|
+
+        @api.sendTrytes(trytes, depth, minWeightMagnitude, options) do |status, data|
           if !status
             raise StandardError, data
           else
@@ -358,8 +359,14 @@ module IOTA
               # Final function for signing inputs
               return signInputs(inputs, bundle, signatureFragments, hmacKey)
             elsif remainder > 0
+              index = 0
+              (0...inputs.length).step(1) do |k|
+                index = [inputs[k].keyIndex, index].max
+              end
+              index += 1
+
               # Generate a new Address by calling getNewAddress
-              address = getNewAddress({security: security})
+              address = getNewAddress({index: index, security: security})
               timestamp = Time.now.utc.to_i
 
               # Remainder bundle entry
