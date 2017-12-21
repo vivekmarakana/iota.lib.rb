@@ -130,13 +130,13 @@ module IOTA
         sendCommand(@commands.getTips, &callback)
       end
 
-      def getTransactionsToApprove(depth, &callback)
+      def getTransactionsToApprove(depth, reference = nil, &callback)
         # Check if correct depth
         if !@validator.isValue(depth)
           return sendData(false, "Invalid inputs provided", &callback)
         end
 
-        sendCommand(@commands.getTransactionsToApprove(depth), &callback)
+        sendCommand(@commands.getTransactionsToApprove(depth, reference), &callback)
       end
 
       def attachToTangle(trunkTransaction, branchTransaction, minWeightMagnitude, trytes, &callback)
@@ -183,6 +183,14 @@ module IOTA
         end
 
         sendCommand(@commands.storeTransactions(trytes), &callback)
+      end
+
+      def checkConsistency(tails, &callback)
+        if !@validator.isArrayOfHashes(tails)
+          return sendData(false, "Invalid tails provided", &callback)
+        end
+
+        sendCommand(@commands.checkConsistency(tails), &callback)
       end
 
       private
