@@ -1,17 +1,15 @@
 # IOTA Ruby Gem
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/vivekmarakana/iota.lib.rb/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/vivekmarakana/iota.lib.rb/master/LICENSE) [![Gem Version](https://badge.fury.io/rb/iota-ruby.svg)](https://badge.fury.io/rb/iota-ruby)
 
-[![Gem Version](https://badge.fury.io/rb/iota-ruby.svg)](https://badge.fury.io/rb/iota-ruby)
-
-This is the **unofficial** Ruby gem for the IOTA Core. It implements both the [official API](https://iota.readme.io/), as well as newly proposed functionality (such as signing, bundles, utilities and conversion).
+This is the **unofficial** Ruby gem for the IOTA Core. It implements both the [official API](https://iota.readme.io/), as well as newly proposed functionality (such as signing, bundles, utilities, conversion, multi signature support and reattch/promote).
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'iota-ruby', '~> 1.1.1'
+gem 'iota-ruby', '~> 1.1.2'
 ```
 
 And then execute:
