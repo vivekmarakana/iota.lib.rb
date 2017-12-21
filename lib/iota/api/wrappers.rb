@@ -227,10 +227,10 @@ module IOTA
           return sendData(false, "Invalid inputs provided", &callback)
         end
 
-        isPromatable = false
+        isPromotable = false
         if !forcedReplay
           checkConsistency([tail]) do |status, isConsistent|
-            isPromatable = status && isConsistent
+            isPromotable = status && isConsistent
           end
         end
 
@@ -239,7 +239,7 @@ module IOTA
             return sendData(false, transactions, &callback)
           end
 
-          if !isPromatable
+          if !isPromotable
             bundleTrytes = []
             transactions.each do |trx|
               bundleTrytes << @utils.transactionTrytes(trx);
