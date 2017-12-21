@@ -2,23 +2,25 @@
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/vivekmarakana/iota.lib.rb/master/LICENSE)
 
+[![Gem Version](https://badge.fury.io/rb/iota-ruby.svg)](https://badge.fury.io/rb/iota-ruby)
+
 This is the **unofficial** Ruby gem for the IOTA Core. It implements both the [official API](https://iota.readme.io/), as well as newly proposed functionality (such as signing, bundles, utilities and conversion).
-
-This gem is a **beta release**. If you find any bug or face issue, please [post it here](https://github.com/vivekmarakana/iota.lib.rb/issues).
-
-**Note: This release does not have multi signature support. It will be added after successful testing of this version**
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'iota-ruby', '~> 1.1.1', require: 'iota'
+gem 'iota-ruby', '~> 1.1.1'
 ```
 
 And then execute:
 
     $ bundle
+
+Or install it yourself as:
+
+    $ gem install iota-ruby
 
 
 # Documentation
@@ -41,6 +43,8 @@ The optional settings object can have the following values:
 You can either supply the remote node directly via the `provider` option, or individually with `host` and `port`, as can be seen in the example below:
 
 ```ruby
+require 'iota'
+
 # Create client with host and port as provider
 client = IOTA::Client.new(host: 'http://localhost', port: 14265)
 
