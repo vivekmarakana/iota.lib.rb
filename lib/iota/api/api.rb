@@ -142,12 +142,12 @@ module IOTA
       def attachToTangle(trunkTransaction, branchTransaction, minWeightMagnitude, trytes, &callback)
         # Check if correct trunk
         if !@validator.isHash(trunkTransaction)
-          return sendData(false, "You have provided an invalid hash as a trunk/branch: " + trunkTransaction, &callback)
+          return sendData(false, "You have provided an invalid hash as a trunk: #{trunkTransaction}", &callback)
         end
 
         # Check if correct branch
         if !@validator.isHash(branchTransaction)
-          return sendData(false, "You have provided an invalid hash as a trunk/branch: " + branchTransaction, &callback)
+          return sendData(false, "You have provided an invalid hash as a branch: #{branchTransaction}", &callback)
         end
 
         # Check if minweight is integer
