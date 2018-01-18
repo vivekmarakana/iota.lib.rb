@@ -1,3 +1,3 @@
 module IOTA
-  VERSION = "1.1.3.p1"
+  VERSION = "1.1.4"
 end
