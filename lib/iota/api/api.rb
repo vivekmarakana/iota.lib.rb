@@ -166,7 +166,7 @@ module IOTA
       end
 
       def interruptAttachingToTangle(&callback)
-        this.sendCommand(@commands.interruptAttachingToTangle, &callback)
+        sendCommand(@commands.interruptAttachingToTangle, &callback)
       end
 
       def broadcastTransactions(trytes, &callback)
