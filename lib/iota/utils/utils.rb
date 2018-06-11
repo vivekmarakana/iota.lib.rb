@@ -154,7 +154,7 @@ module IOTA
         inputsWithChecksum = input.map do |inputValue|
           # check if correct trytes
           if !@validator.isTrytes(inputValue, validationLength)
-            throw Error, "Invalid input provided"
+            raise ArgumentError, "Invalid input provided"
           end
 
           kerl = IOTA::Crypto::Kerl.new
