@@ -5,8 +5,8 @@ require 'json'
 module IOTA
   module Utils
     class Broker
-      def initialize(provider, token, timeout = 120)
-        @provider, @token = provider, token
+      def initialize(provider, token, timeout = 120, user: nil, password: nil)
+        @provider, @token, @user, @password = provider, token, user, password
         @timeout = timeout if timeout.to_i > 0
       end
 
@@ -83,7 +83,11 @@ module IOTA
           read_timeout: @timeout || 120
         }
 
-        request["Authorization"] = "token #{@token}" if @token
+        if @token
+          request["Authorization"] = "token #{@token}"
+        elsif @user && @password
+          request.basic_auth @user, @password
+        end
 
         [uri, request, req_options]
       end
