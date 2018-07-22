@@ -75,7 +75,6 @@ module IOTA
       end
 
       def getBalances(addresses, threshold, &callback)
-        # Check if correct transaction hashes
         if !@validator.isArrayOfHashes(addresses)
           return sendData(false, "Invalid Trytes provided", &callback)
         end
@@ -93,7 +92,6 @@ module IOTA
       end
 
       def getInclusionStates(transactions, tips, &callback)
-        # Check if correct transaction hashes and tips
         if !@validator.isArrayOfHashes(transactions) || !@validator.isArrayOfHashes(tips)
           return sendData(false, "Invalid Trytes provided", &callback)
         end
@@ -193,7 +191,6 @@ module IOTA
       end
 
       def wereAddressesSpentFrom(addresses, &callback)
-        # Check if correct transaction hashes
         if !@validator.isArrayOfHashes(addresses)
           return sendData(false, "Invalid Trytes provided", &callback)
         end
