@@ -6,7 +6,7 @@ module IOTA
           command: 'findTransactions'
         }
 
-        searchValues.each { |k, v| command[k] = v }
+        searchValues.each { |k, v| command[k.to_sym] = v }
 
         command
       end

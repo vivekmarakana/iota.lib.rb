@@ -21,7 +21,8 @@ module IOTA
         searchKeys = searchValues.keys
         validKeys = ['bundles', 'addresses', 'tags', 'approvees']
 
-        error = false;
+        error = false
+        entry_count = 0
 
         searchKeys.each do |key|
           if !validKeys.include?(key.to_s)
@@ -30,6 +31,7 @@ module IOTA
           end
 
           hashes = searchValues[key]
+          entry_count += hashes.count
 
           if key.to_s == 'addresses'
             searchValues[key] = hashes.map do |address|
@@ -64,7 +66,11 @@ module IOTA
         if error
           return sendData(false, error, &callback)
         else
-          sendCommand(@commands.findTransactions(searchValues), &callback)
+          if entry_count <= @batch_size || searchKeys.count > 1
+            return sendCommand(@commands.findTransactions(searchValues), &callback)
+          else
+            return sendBatchedCommand(@commands.findTransactions(searchValues), &callback)
+          end
         end
       end
 
