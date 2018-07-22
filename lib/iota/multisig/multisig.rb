@@ -125,7 +125,7 @@ module IOTA
               if !st1
                 raise StandardError, "Error fetching balances: #{balances}"
               else
-                return createBundle(balances['balances'][0].to_i, totalValue, bundle, input, remainderAddress, tag, signatureFragments)
+                return createBundle(balances[0].to_i, totalValue, bundle, input, remainderAddress, tag, signatureFragments)
               end
             end
           end

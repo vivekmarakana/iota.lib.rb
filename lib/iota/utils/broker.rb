@@ -98,7 +98,8 @@ module IOTA
           'getTrytes'             =>   'trytes',
           'getInclusionStates'    =>   'states',
           'attachToTangle'        =>   'trytes',
-          'checkConsistency'      =>   'state'
+          'checkConsistency'      =>   'state',
+          'getBalances'           =>   'balances'
         }
 
         # If correct result and we want to prepare the result

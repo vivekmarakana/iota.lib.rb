@@ -2,17 +2,15 @@ module IOTA
   module API
     class Api
       include Wrappers
+      include Transport
 
-      def initialize(broker, sandbox)
+      def initialize(broker, sandbox, batch_size = 500)
         @broker = broker
         @sandbox = sandbox
         @commands = Commands.new
         @utils = IOTA::Utils::Utils.new
         @validator = @utils.validator
-      end
-
-      def sendCommand(command, &callback)
-        @broker.send(command, &callback)
+        @batch_size = batch_size
       end
 
       def findTransactions(searchValues, &callback)
@@ -77,7 +75,7 @@ module IOTA
         end
 
         command = @commands.getBalances(addresses.map{|address| @utils.noChecksum(address)}, threshold)
-        sendCommand(command, &callback)
+        sendBatchedCommand(command, &callback)
       end
 
       def getTrytes(hashes, &callback)
@@ -85,7 +83,7 @@ module IOTA
           return sendData(false, "Invalid Trytes provided", &callback)
         end
 
-        sendCommand(@commands.getTrytes(hashes), &callback)
+        sendBatchedCommand(@commands.getTrytes(hashes), &callback)
       end
 
       def getInclusionStates(transactions, tips, &callback)
@@ -99,7 +97,7 @@ module IOTA
           return sendData(false, "Invalid Trytes provided", &callback)
         end
 
-        sendCommand(@commands.getInclusionStates(transactions, tips), &callback)
+        sendBatchedCommand(@commands.getInclusionStates(transactions, tips), &callback)
       end
 
       def getNodeInfo(&callback)
