@@ -191,6 +191,16 @@ module IOTA
         sendCommand(@commands.checkConsistency(tails), &callback)
       end
 
+      def wereAddressesSpentFrom(addresses, &callback)
+        # Check if correct transaction hashes
+        if !@validator.isArrayOfHashes(addresses)
+          return sendData(false, "Invalid Trytes provided", &callback)
+        end
+
+        command = @commands.wereAddressesSpentFrom(addresses.map{|address| @utils.noChecksum(address)})
+        sendBatchedCommand(command, &callback)
+      end
+
       private
       def sendData(status, data, &callback)
         callback ? callback.call(status, data) : [status, data]

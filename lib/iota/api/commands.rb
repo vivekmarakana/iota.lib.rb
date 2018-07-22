@@ -101,6 +101,13 @@ module IOTA
           tails: tails
         }
       end
+
+      def wereAddressesSpentFrom(addresses)
+        {
+          command: 'wereAddressesSpentFrom',
+          addresses: addresses
+        }
+      end
     end
   end
 end

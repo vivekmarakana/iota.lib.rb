@@ -99,7 +99,8 @@ module IOTA
           'getInclusionStates'    =>   'states',
           'attachToTangle'        =>   'trytes',
           'checkConsistency'      =>   'state',
-          'getBalances'           =>   'balances'
+          'getBalances'           =>   'balances',
+          'wereAddressesSpentFrom'=>   'states'
         }
 
         # If correct result and we want to prepare the result
