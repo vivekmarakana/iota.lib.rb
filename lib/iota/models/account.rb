@@ -58,7 +58,7 @@ module IOTA
               raise StandardError, balancesData
             end
 
-            balancesData['balances'].each_with_index do |balance, index|
+            balancesData.each_with_index do |balance, index|
               balance = balance.to_i
               @balance += balance
 
@@ -208,7 +208,7 @@ module IOTA
               confirmedInputs = []
               totalBalance = 0
 
-              balances['balances'].each_with_index do |balance, i|
+              balances.each_with_index do |balance, i|
                 # If input has balance, add it to confirmedInputs
                 balance = balance.to_i
 
