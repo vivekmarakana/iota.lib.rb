@@ -10,6 +10,7 @@ module IOTA
         mapping = {
           getTrytes: [ :hashes ],
           getBalances: [ :addresses ],
+          wereAddressesSpentFrom: [ :addresses ],
           getInclusionStates: [ :transactions ],
           findTransactions: [ :bundles, :addresses, :tags, :approvees ]
         }

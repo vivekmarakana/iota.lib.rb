@@ -93,13 +93,8 @@ module IOTA
       end
 
       def getInclusionStates(transactions, tips, &callback)
-        # Check if correct transaction hashes
-        if !@validator.isArrayOfHashes(transactions)
-          return sendData(false, "Invalid Trytes provided", &callback)
-        end
-
-        # Check if correct tips
-        if !@validator.isArrayOfHashes(tips)
+        # Check if correct transaction hashes and tips
+        if !@validator.isArrayOfHashes(transactions) || !@validator.isArrayOfHashes(tips)
           return sendData(false, "Invalid Trytes provided", &callback)
         end
 
