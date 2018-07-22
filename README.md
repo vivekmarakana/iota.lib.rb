@@ -9,7 +9,7 @@ This is the **unofficial** Ruby gem for the IOTA Core. It implements both the [o
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'iota-ruby', '~> 1.1.2'
+gem 'iota-ruby'
 ```
 
 And then execute:
@@ -87,4 +87,4 @@ else
 end
 ```
 
-If you'd like to support development, please consider donating to my IOTA address: **LOBYBAFIKJFEGTLCCQSHOPX9ROIRAI99QSTD9BRALHMHUOISF9DIZJYICXAIQMJCPZYTXMRMPOWG9WOICGMMNHQIH9**
+If you'd like to support development, please consider donating to my IOTA address: **SGBYR9DXPBPGTFLILQWAYIMINZ9MQAFKGDBHQSXGLKNIHCQZEDYPVNRMDVWFPXQTAIVKWCVWXVXZVZ9R9HIKTZWUAC**
