@@ -2,17 +2,15 @@ module IOTA
   module API
     class Api
       include Wrappers
+      include Transport
 
-      def initialize(broker, sandbox)
+      def initialize(broker, sandbox, batch_size = 500)
         @broker = broker
         @sandbox = sandbox
         @commands = Commands.new
         @utils = IOTA::Utils::Utils.new
         @validator = @utils.validator
-      end
-
-      def sendCommand(command, &callback)
-        @broker.send(command, &callback)
+        @batch_size = batch_size
       end
 
       def findTransactions(searchValues, &callback)
@@ -23,7 +21,8 @@ module IOTA
         searchKeys = searchValues.keys
         validKeys = ['bundles', 'addresses', 'tags', 'approvees']
 
-        error = false;
+        error = false
+        entry_count = 0
 
         searchKeys.each do |key|
           if !validKeys.include?(key.to_s)
@@ -32,6 +31,7 @@ module IOTA
           end
 
           hashes = searchValues[key]
+          entry_count += hashes.count
 
           if key.to_s == 'addresses'
             searchValues[key] = hashes.map do |address|
@@ -66,18 +66,21 @@ module IOTA
         if error
           return sendData(false, error, &callback)
         else
-          sendCommand(@commands.findTransactions(searchValues), &callback)
+          if entry_count <= @batch_size || searchKeys.count > 1
+            return sendCommand(@commands.findTransactions(searchValues), &callback)
+          else
+            return sendBatchedCommand(@commands.findTransactions(searchValues), &callback)
+          end
         end
       end
 
       def getBalances(addresses, threshold, &callback)
-        # Check if correct transaction hashes
         if !@validator.isArrayOfHashes(addresses)
           return sendData(false, "Invalid Trytes provided", &callback)
         end
 
         command = @commands.getBalances(addresses.map{|address| @utils.noChecksum(address)}, threshold)
-        sendCommand(command, &callback)
+        sendBatchedCommand(command, &callback)
       end
 
       def getTrytes(hashes, &callback)
@@ -85,21 +88,15 @@ module IOTA
           return sendData(false, "Invalid Trytes provided", &callback)
         end
 
-        sendCommand(@commands.getTrytes(hashes), &callback)
+        sendBatchedCommand(@commands.getTrytes(hashes), &callback)
       end
 
       def getInclusionStates(transactions, tips, &callback)
-        # Check if correct transaction hashes
-        if !@validator.isArrayOfHashes(transactions)
+        if !@validator.isArrayOfHashes(transactions) || !@validator.isArrayOfHashes(tips)
           return sendData(false, "Invalid Trytes provided", &callback)
         end
 
-        # Check if correct tips
-        if !@validator.isArrayOfHashes(tips)
-          return sendData(false, "Invalid Trytes provided", &callback)
-        end
-
-        sendCommand(@commands.getInclusionStates(transactions, tips), &callback)
+        sendBatchedCommand(@commands.getInclusionStates(transactions, tips), &callback)
       end
 
       def getNodeInfo(&callback)
@@ -191,6 +188,15 @@ module IOTA
         end
 
         sendCommand(@commands.checkConsistency(tails), &callback)
+      end
+
+      def wereAddressesSpentFrom(addresses, &callback)
+        if !@validator.isArrayOfHashes(addresses)
+          return sendData(false, "Invalid Trytes provided", &callback)
+        end
+
+        command = @commands.wereAddressesSpentFrom(addresses.map{|address| @utils.noChecksum(address)})
+        sendBatchedCommand(command, &callback)
       end
 
       private

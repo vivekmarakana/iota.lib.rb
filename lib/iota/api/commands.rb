@@ -6,7 +6,7 @@ module IOTA
           command: 'findTransactions'
         }
 
-        searchValues.each { |k, v| command[k] = v }
+        searchValues.each { |k, v| command[k.to_sym] = v }
 
         command
       end
@@ -99,6 +99,13 @@ module IOTA
         {
           command: 'checkConsistency',
           tails: tails
+        }
+      end
+
+      def wereAddressesSpentFrom(addresses)
+        {
+          command: 'wereAddressesSpentFrom',
+          addresses: addresses
         }
       end
     end

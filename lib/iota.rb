@@ -8,6 +8,7 @@ require "iota/utils/broker"
 
 require "iota/api/commands"
 require "iota/api/wrappers"
+require "iota/api/transport"
 require "iota/api/api"
 
 require "iota/crypto/curl"
@@ -31,7 +32,7 @@ require "iota/models/account"
 
 module IOTA
   class Client
-    attr_reader :version, :host, :port, :provider, :sandbox, :token, :broker, :api, :utils, :validator, :multisig
+    attr_reader :version, :host, :port, :provider, :sandbox, :token, :broker, :api, :utils, :validator, :multisig, :batch_size
 
     def initialize(settings = {})
       setSettings(settings)
@@ -56,6 +57,7 @@ module IOTA
       @sandbox = settings[:sandbox] || false
       @token = settings[:token] || false
       @timeout = settings[:timeout] || 120
+      @batch_size = settings[:batch_size] || 500
 
       if @sandbox
         @sandbox = @provider.gsub(/\/$/, '')
@@ -63,7 +65,7 @@ module IOTA
       end
 
       @broker = IOTA::Utils::Broker.new(@provider, @token, @timeout)
-      @api = IOTA::API::Api.new(@broker, @sandbox)
+      @api = IOTA::API::Api.new(@broker, @sandbox, @batch_size)
     end
 
     def symbolize_keys(hash)

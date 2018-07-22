@@ -10,7 +10,7 @@ module IOTA
         ret_status = false
         ret_data = nil
         # get the trytes of the transaction hashes
-        getTrytesInBatches(hashes) do |status, trytes|
+        getTrytes(hashes) do |status, trytes|
           ret_status = status
           if status
             transactionObjects = []
@@ -424,25 +424,6 @@ module IOTA
             return sendData(true, results, &callback)
           end
         end
-      end
-
-      def getTrytesInBatches(hashes, batchSize = 500, &callback)
-        if !@validator.isArrayOfHashes(hashes)
-          return sendData(false, "Invalid Trytes provided", &callback)
-        end
-
-        data = []
-
-        hashes.each_slice(batchSize) do |group|
-          getTrytes(group) do |status, trytes|
-            if !status
-              return sendData(false, trytes, &callback)
-            end
-            data += trytes
-          end
-        end
-
-        sendData(true, data, &callback)
       end
     end
   end
