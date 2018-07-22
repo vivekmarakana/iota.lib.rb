@@ -318,9 +318,22 @@ module IOTA
           loop do
             newAddress = @seed.getAddress(index, security, checksum)
 
-            @api.findTransactions(addresses: [newAddress]) do |status, trx_hashes|
+            @api.wereAddressesSpentFrom([newAddress]) do |status, spent_states|
               if !status
-                raise StandardError, trx_hashes
+                raise StandardError, spent_states
+              end
+
+              spent = spent_states[0]
+
+              # Check transactions if not spent
+              if !spent
+                @api.findTransactions(addresses: [newAddress]) do |status, trx_hashes|
+                  if !status
+                    raise StandardError, trx_hashes
+                  end
+
+                  spent = trx_hashes.length > 0
+                end
               end
 
               if return_all
@@ -328,8 +341,7 @@ module IOTA
               end
 
               index += 1
-
-              return (return_all ? allAddresses : newAddress) if trx_hashes.length == 0
+              return (return_all ? allAddresses : newAddress) if !spent
             end
           end
         end
