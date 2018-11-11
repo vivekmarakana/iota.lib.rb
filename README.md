@@ -1,6 +1,6 @@
 # IOTA Ruby Gem
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/vivekmarakana/iota.lib.rb/master/LICENSE) [![Gem Version](https://badge.fury.io/rb/iota-ruby.svg)](https://badge.fury.io/rb/iota-ruby)
+[![Build Status](https://travis-ci.org/vivekmarakana/iota.lib.rb.svg?branch=master)](https://travis-ci.org/vivekmarakana/iota.lib.rb) [![Gem Version](https://badge.fury.io/rb/iota-ruby.svg)](https://badge.fury.io/rb/iota-ruby) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/vivekmarakana/iota.lib.rb/master/LICENSE)
 
 This is the **unofficial** Ruby gem for the IOTA Core. It implements both the [official API](https://iota.readme.io/), as well as newly proposed functionality (such as signing, bundles, utilities, conversion, multi signature support and reattch/promote).
 
