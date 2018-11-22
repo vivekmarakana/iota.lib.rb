@@ -64,7 +64,7 @@ module IOTA
         @provider = @sandbox + '/commands'
       end
 
-      @broker = IOTA::Utils::Broker.new(@provider, @token, @timeout)
+      @broker = IOTA::Utils::Broker.new(@provider, @token, @timeout, user: settings[:user], password: settings[:password])
       @api = IOTA::API::Api.new(@broker, @sandbox, @batch_size)
     end
 
