@@ -4,16 +4,7 @@ os:
   - linux
   - osx
 rvm:
-  - 2.4.1
-  - jruby
-jdk:
-  - openjdk7
-  - openjdk8
-matrix:
-  exclude:
-    - rvm: 2.4.1
-      jdk: openjdk7
-    - os: linux
-      rvm: jruby
-      jdk: openjdk7
+  - ruby-head
+  - 2.5.0
+  - 2.4.0
 before_install: gem install bundler -v 1.15.0
