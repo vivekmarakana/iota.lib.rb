@@ -33,10 +33,15 @@ After you've successfully installed the library, it is fairly easy to get starte
 The optional settings object can have the following values:
 
 1. **`host`**: `String` Host you want to connect to. Can be DNS, IPv4 or IPv6. Defaults to `localhost `
-2. **`port`**: `Int` port of the host you want to connect to. Defaults to 14265.
+2. **`port`**: `Integer` port of the host you want to connect to. Defaults to 14265.
+2. **`user`**: `String` username for host if required.
+2. **`password`**: `String` password for host if required.
 3. **`provider`**: `String` If you don't provide host and port, you can supply the full provider value to connect to
-4. **`sandbox`**: `Bool` Optional value to determine if your provider is the IOTA Sandbox or not.
+4. **`sandbox`**: `Boolean` Optional value to determine if your provider is the IOTA Sandbox or not.
 5. **`token`**: `String` Token string in case you are using sandbox.
+5. **`timeout`**: `Integer` Timeout in seconds for api requests to full node. Defaults to 120.
+5. **`batch_size`**: `Integer` Batch size for apis like `getTrytes`, `getBalances` etc. Defaults to 500.
+5. **`local_pow`**: `Boolean` Should PoW be done local machine or not. Defaults to `false` i.e. remote PoW.
 
 You can either supply the remote node directly via the `provider` option, or individually with `host` and `port`, as can be seen in the example below:
 
@@ -87,4 +92,18 @@ else
 end
 ```
 
-If you'd like to support development, please consider donating to my IOTA address: **SGBYR9DXPBPGTFLILQWAYIMINZ9MQAFKGDBHQSXGLKNIHCQZEDYPVNRMDVWFPXQTAIVKWCVWXVXZVZ9R9HIKTZWUAC**
+## Local PoW Support
+
+If you want to use this gem with public full node which does not support remote PoW on host, you can set `local_pow` to `true` when initialising the client.
+
+```ruby
+require 'iota'
+
+# With remote PoW
+client = IOTA::Client.new(provider: 'https://node.iota-tangle.io:14265')
+# If you use `client.api.attachToTangle` api here, you'll get error saying that attachToTangle command is not allowed
+
+# With local pow
+client = IOTA::Client.new(provider: 'https://node.iota-tangle.io:14265', local_pow: true)
+# Now you can use `client.api.attachToTangle` api, which will do the proof-of-work on transaction and return the trytes that needs to be broadcasted
+```
