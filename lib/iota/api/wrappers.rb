@@ -85,9 +85,8 @@ module IOTA
               return sendData(false, attached_data, &callback)
             end
 
-            # If the user is connected to the sandbox, we have to monitor the POW queue
-            # to check if the POW job was completed
-            if @sandbox
+            # If the user is connected to the sandbox and local pow is not used, we have to monitor the POW queue to check if the POW job was completed
+            if @sandbox && @pow_provider.nil?
               # Implement sandbox processing
               jobUri = @sandbox + '/jobs/' + attached_data['id']
 

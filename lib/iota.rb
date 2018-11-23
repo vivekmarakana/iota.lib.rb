@@ -59,6 +59,7 @@ module IOTA
       @token = settings[:token] || false
       @timeout = settings[:timeout] || 120
       @batch_size = settings[:batch_size] || 500
+      @local_pow = settings[:local_pow] || false
 
       if @sandbox
         @sandbox = @provider.gsub(/\/$/, '')
@@ -66,7 +67,7 @@ module IOTA
       end
 
       @broker = IOTA::Utils::Broker.new(@provider, @token, @timeout, user: settings[:user], password: settings[:password])
-      @api = IOTA::API::Api.new(@broker, @sandbox, @batch_size)
+      @api = IOTA::API::Api.new(@broker, @sandbox, @batch_size, @local_pow)
     end
 
     def symbolize_keys(hash)
