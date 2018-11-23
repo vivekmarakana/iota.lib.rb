@@ -3,11 +3,19 @@ language: ruby
 os:
   - linux
   - osx
-  - windows
 rvm:
   - 2.4.1
   - jruby
 jdk:
   - openjdk7
-  - oraclejdk8
+  - openjdk8
+matrix:
+  exclude:
+    - rvm: 2.4.1
+      jdk: openjdk7
+    - rvm: 2.4.1
+      jdk: openjdk8
+    - os: linux
+      rvm: jruby
+      jdk: openjdk7
 before_install: gem install bundler -v 1.15.0

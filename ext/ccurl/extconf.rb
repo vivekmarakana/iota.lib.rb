@@ -1,5 +1,4 @@
 can_compile_extensions = false
-want_extensions = true
 
 begin
   require 'mkmf'
@@ -9,7 +8,7 @@ rescue Exception
   $stderr.puts "Could not require 'mkmf'. Not fatal, the extensions are optional."
 end
 
-if can_compile_extensions && want_extensions
+if can_compile_extensions && have_header('ruby.h')
   extension_name = 'ccurl'
   dir_config(extension_name)       # The destination
   create_makefile(extension_name)  # Create Makefile
