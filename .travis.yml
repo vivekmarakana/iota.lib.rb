@@ -1,5 +1,15 @@
 sudo: false
 language: ruby
+os:
+  - linux
+  - osx
+  - windows
 rvm:
   - 2.4.1
+  - jruby
+  - rbx-3
+jdk:
+  - openjdk6
+  - openjdk7
+  - oraclejdk7
 before_install: gem install bundler -v 1.15.0
