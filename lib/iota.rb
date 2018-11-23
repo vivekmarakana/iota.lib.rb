@@ -11,6 +11,7 @@ require "iota/api/wrappers"
 require "iota/api/transport"
 require "iota/api/api"
 
+require "iota/crypto/pow_provider"
 require "iota/crypto/curl"
 require "iota/crypto/kerl"
 require "iota/crypto/converter"
