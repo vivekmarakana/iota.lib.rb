@@ -13,8 +13,6 @@ matrix:
   exclude:
     - rvm: 2.4.1
       jdk: openjdk7
-    - rvm: 2.4.1
-      jdk: openjdk8
     - os: linux
       rvm: jruby
       jdk: openjdk7
