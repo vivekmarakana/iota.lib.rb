@@ -86,5 +86,3 @@ else
   puts data.inspect
 end
 ```
-
-If you'd like to support development, please consider donating to my IOTA address: **SGBYR9DXPBPGTFLILQWAYIMINZ9MQAFKGDBHQSXGLKNIHCQZEDYPVNRMDVWFPXQTAIVKWCVWXVXZVZ9R9HIKTZWUAC**
