@@ -5,13 +5,14 @@ module IOTA
     class PowProvider
       extend FFI::Library
 
+      ccurl_version = '0.3.0'
       lib_root = File.join(File.dirname(__FILE__), '../../../ext/pow')
       if FFI::Platform.windows?
-        libccurl_path = "#{lib_root}/ccurl.dll"
+        libccurl_path = "#{lib_root}/ccurl-#{ccurl_version}.dll"
       elsif FFI::Platform.mac?
-        libccurl_path = "#{lib_root}/libccurl.dylib"
+        libccurl_path = "#{lib_root}/libccurl-#{ccurl_version}.dylib"
       else
-        libccurl_path = "#{lib_root}/libccurl.so"
+        libccurl_path = "#{lib_root}/libccurl-#{ccurl_version}.so"
       end
 
       ffi_lib libccurl_path
