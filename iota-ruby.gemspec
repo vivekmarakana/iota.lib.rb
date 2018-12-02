@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "rake-compiler", "~> 1.0.4"
   spec.add_dependency "digest-sha3", "~> 1.1"
+  spec.add_dependency "ffi", "~> 1.9.25"
 end

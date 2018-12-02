@@ -4,13 +4,16 @@ module IOTA
       include Wrappers
       include Transport
 
-      def initialize(broker, sandbox, batch_size = 500)
+      attr_reader :pow_provider
+
+      def initialize(broker, sandbox, batch_size = 500, local_pow = false)
         @broker = broker
         @sandbox = sandbox
         @commands = Commands.new
         @utils = IOTA::Utils::Utils.new
         @validator = @utils.validator
         @batch_size = batch_size
+        @pow_provider = local_pow ? IOTA::Crypto::PowProvider.new : nil
       end
 
       def findTransactions(searchValues, &callback)
@@ -149,7 +152,7 @@ module IOTA
 
         # Check if minweight is integer
         if !@validator.isValue(minWeightMagnitude)
-          return sendData(false, "Invalid inputs provided", &callback)
+          return sendData(false, "Invalid minWeightMagnitude provided", &callback)
         end
 
         # Check if array of trytes
@@ -157,9 +160,49 @@ module IOTA
           return sendData(false, "Invalid Trytes provided", &callback)
         end
 
-        command = @commands.attachToTangle(trunkTransaction, branchTransaction, minWeightMagnitude, trytes)
+        if @pow_provider.nil?
+          command = @commands.attachToTangle(trunkTransaction, branchTransaction, minWeightMagnitude, trytes)
 
-        sendCommand(command, &callback)
+          sendCommand(command, &callback)
+        else
+          previousTxHash = nil
+          finalBundleTrytes = []
+
+          trytes.each do |current_trytes|
+            txObject = @utils.transactionObject(current_trytes)
+
+            if !previousTxHash
+              if txObject.lastIndex != txObject.currentIndex
+                return sendData(false, "Wrong bundle order. The bundle should be ordered in descending order from currentIndex", &callback)
+              end
+
+              txObject.trunkTransaction = trunkTransaction
+              txObject.branchTransaction = branchTransaction
+            else
+              txObject.trunkTransaction = previousTxHash
+              txObject.branchTransaction = trunkTransaction
+            end
+
+            txObject.attachmentTimestamp = (Time.now.to_f * 1000).to_i
+            txObject.attachmentTimestampLowerBound = 0
+            txObject.attachmentTimestampUpperBound = (3**27 - 1) / 2
+
+            newTrytes = @utils.transactionTrytes(txObject)
+
+            begin
+              returnedTrytes = @pow_provider.pow(newTrytes, minWeightMagnitude)
+
+              newTxObject= @utils.transactionObject(returnedTrytes)
+              previousTxHash = newTxObject.hash
+
+              finalBundleTrytes << returnedTrytes
+            rescue => e
+              return sendData(false, e.message, &callback)
+            end
+          end
+
+          sendData(true, finalBundleTrytes, &callback)
+        end
       end
 
       def interruptAttachingToTangle(&callback)

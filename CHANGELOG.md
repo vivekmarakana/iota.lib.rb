@@ -1,3 +1,7 @@
+## [1.1.7] - 2018-12-02
+- adding `user` & `password` options to client
+- [Local PoW Support](https://github.com/vivekmarakana/iota.lib.rb#local-pow-support)
+
 ## [1.1.6] - 2018-07-22
 ### Added
 - `wasAddressSpentFrom` API
