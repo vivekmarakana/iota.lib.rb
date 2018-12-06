@@ -13,6 +13,4 @@ rvm:
   - jruby-18mode
   - jruby-19mode
   - rbx-3
-jdk:
-  - openjdk8
 before_install: gem install bundler -v 1.15.0
