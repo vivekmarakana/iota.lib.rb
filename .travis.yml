@@ -1,5 +1,7 @@
 sudo: false
 language: ruby
+dist: trusty
+osx_image: xcode10.1
 os:
   - linux
   - osx
@@ -13,18 +15,12 @@ rvm:
   - rbx-3
   - rbx-2
 jdk:
-  - openjdk7
   - openjdk8
+  - openjdk10
 matrix:
   exclude:
-    - rvm: ruby-head
+    - os: mac # mac does not support openjdk8 on travis
       jdk: openjdk8
-    - rvm: 2.5.1
-      jdk: openjdk8
-    - rvm: 2.4.1
-      jdk: openjdk8
-    - rvm: rbx-3
-      jdk: openjdk8
-    - rvm: rbx-2
-      jdk: openjdk8
+    - os: linux
+      jdk: openjdk10
 before_install: gem install bundler -v 1.15.0
