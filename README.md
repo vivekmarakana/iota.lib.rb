@@ -107,3 +107,15 @@ client = IOTA::Client.new(provider: 'https://node.iota-tangle.io:14265')
 client = IOTA::Client.new(provider: 'https://node.iota-tangle.io:14265', local_pow: true)
 # Now you can use `client.api.attachToTangle` api, which will do the proof-of-work on transaction and return the trytes that needs to be broadcasted
 ```
+
+## Compatibility
+
+Tested on [Travis CI](https://travis-ci.org/vivekmarakana/iota.lib.rb) on following environment [configurations](https://github.com/vivekmarakana/iota.lib.rb/blob/master/.travis.yml):
+
+- ruby-head (Linux)
+- 2.5.1 (Linux & Mac)
+- 2.4.1 (Linux & Mac)
+- jruby-head (OpenJDK8/Linux)
+- jruby-19mode (OpenJDK8/Linux & OpenJDK8/OSX)
+- jruby-18mode (OpenJDK8/Linux & OpenJDK8/OSX)
+- rbx-3 (Linux)

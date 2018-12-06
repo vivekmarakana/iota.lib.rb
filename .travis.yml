@@ -13,4 +13,12 @@ rvm:
   - jruby-18mode
   - jruby-19mode
   - rbx-3
+matrix:
+  exclude:
+    - os: osx
+      rvm: rbx-3
+    - os: osx
+      rvm: ruby-head
+    - os: osx
+      rvm: jruby-head
 before_install: gem install bundler -v 1.15.0
