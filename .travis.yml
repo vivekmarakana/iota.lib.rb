@@ -7,4 +7,24 @@ rvm:
   - ruby-head
   - 2.5.1
   - 2.4.1
+  - jruby-head
+  - jruby-18mode
+  - jruby-19mode
+  - rbx-3
+  - rbx-2
+jdk:
+  - openjdk7
+  - openjdk8
+matrix:
+  exclude:
+    - rvm: ruby-head
+      jdk: openjdk8
+    - rvm: 2.5.1
+      jdk: openjdk8
+    - rvm: 2.4.1
+      jdk: openjdk8
+    - rvm: rbx-3
+      jdk: openjdk8
+    - rvm: rbx-2
+      jdk: openjdk8
 before_install: gem install bundler -v 1.15.0
