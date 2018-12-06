@@ -1,6 +1,5 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
-require "rake/extensiontask"
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
@@ -8,17 +7,16 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList["test/**/*_test.rb"]
 end
 
-Rake::ExtensionTask.new "ccurl" do |ext|
-  ext.lib_dir = "lib"
-end
-
-def can_compile_extensions
-  return false if RUBY_DESCRIPTION =~ /jruby/
-  return true
-end
-
-if can_compile_extensions
-  task :default => [:compile, :test]
+if RUBY_PLATFORM =~ /java/
+  require 'rake/javaextensiontask'
+  Rake::JavaExtensionTask.new "jcurl" do |ext|
+    ext.lib_dir = "lib"
+  end
 else
-  task :default => [:test]
+  require 'rake/extensiontask'
+  Rake::ExtensionTask.new "ccurl" do |ext|
+    ext.lib_dir = "lib"
+  end
 end
+
+task :default => [:compile, :test]

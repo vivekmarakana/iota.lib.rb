@@ -5,6 +5,12 @@ class UtilsTest < Minitest::Test
     @utils = IOTA::Utils::Utils.new
   end
 
+  def test_add_checksum
+    addressWithoutChecksum = "UYEEERFQYTPFAHIPXDQAQYWYMSMCLMGBTYAXLWFRFFWPYFOICOVLK9A9VYNCKK9TQUNBTARCEQXJHD9VY"
+    addressWithChecksum = "UYEEERFQYTPFAHIPXDQAQYWYMSMCLMGBTYAXLWFRFFWPYFOICOVLK9A9VYNCKK9TQUNBTARCEQXJHD9VYXOEDEOMRC"
+    assert_equal @utils.addChecksum(addressWithoutChecksum), addressWithChecksum
+  end
+
   def test_checksum_validation
     addressWithChecksum = "UYEEERFQYTPFAHIPXDQAQYWYMSMCLMGBTYAXLWFRFFWPYFOICOVLK9A9VYNCKK9TQUNBTARCEQXJHD9VYXOEDEOMRC"
     assert_equal @utils.isValidChecksum(addressWithChecksum), true

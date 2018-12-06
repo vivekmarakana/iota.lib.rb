@@ -1,5 +1,3 @@
-require 'digest/sha3'
-
 module IOTA
   module Crypto
     class Kerl
@@ -11,7 +9,13 @@ module IOTA
       end
 
       def reset
-        @hasher = Digest::SHA3.new(BIT_HASH_LENGTH)
+        unless RUBY_PLATFORM =~ /java/
+          require 'digest/sha3'
+          @hasher = Digest::SHA3.new(BIT_HASH_LENGTH)
+        else
+          require "iota/crypto/sha3_ruby"
+          @hasher = Digest::RubySHA3.new(BIT_HASH_LENGTH)
+        end
       end
 
       def absorb(trits, offset = 0, length = nil)

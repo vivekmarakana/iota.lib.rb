@@ -1,11 +1,11 @@
 require "test_helper"
-unless RUBY_PLATFORM =~ /java/
-  require "iota/crypto/curl_c"
+if RUBY_PLATFORM =~ /java/
+  require "iota/crypto/curl_java"
 
-  class CCurlTest < Minitest::Test
+  class JavaCurlTest < Minitest::Test
     def setup
       @converter = IOTA::Crypto::Converter
-      @curl = IOTA::Crypto::CCurl.new(81)
+      @curl = IOTA::Crypto::JCurl.new(81)
     end
 
     def test_that_hash_works
@@ -21,11 +21,11 @@ unless RUBY_PLATFORM =~ /java/
       @curl.absorb(transactionTrits)
       @curl.squeeze(hash)
       hash = @converter.trytes(hash)
-      puts "C Curl time: #{(Time.now - start) * 1000.0}ms"
+      puts "Java Curl time: #{(Time.now - start) * 1000.0}ms"
 
       assert expected_hash == hash
     end
   end
 else
-  puts "C extension is not available. Skipping tests for it."
+  puts "Java extension is not available. Skipping tests for it."
 end
