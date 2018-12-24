@@ -13,12 +13,15 @@ Gem::Specification.new do |spec|
   spec.description   = "Ruby gem for the IOTA core"
   spec.homepage      = "https://github.com/vivekmarakana/iota.lib.rb"
 
-  spec.files         = `git ls-files`.split("\n")
+  spec.files         = `git ls-files`.split("\n") - [ "lib/jcurl.jar" ]
   spec.test_files    = `git ls-files -- test/*`.split("\n")
   spec.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  unless RUBY_PLATFORM =~ /java/
+  if RUBY_PLATFORM =~ /java/
+    spec.platform      = "java"
+    spec.files         << "lib/jcurl.jar"
+  else
     spec.extensions    = ["ext/ccurl/extconf.rb"]
   end
 
