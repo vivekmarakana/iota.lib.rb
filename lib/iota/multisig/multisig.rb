@@ -57,7 +57,7 @@ module IOTA
         # validate remainder address
         raise StandardError, "Invalid remainder address provided" if remainderAddress && !@validator.isAddress(remainderAddress)
 
-        remainderAddress = @utils.noChecksum(remainderAddress) if remainderAddress.length == 90
+        remainderAddress = @utils.noChecksum(remainderAddress) if remainderAddress && remainderAddress.length == 90
 
         # Create a new bundle
         bundle = IOTA::Crypto::Bundle.new
