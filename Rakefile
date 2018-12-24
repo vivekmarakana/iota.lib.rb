@@ -20,7 +20,7 @@ if RUBY_PLATFORM =~ /java/
 
     tasks << :compile
   else
-    puts "Not building jar or travis"
+    puts "Not building jar for travis"
   end
 else
   puts "Will build C extension"
