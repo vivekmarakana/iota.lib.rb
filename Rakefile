@@ -7,6 +7,8 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList["test/**/*_test.rb"]
 end
 
+tasks = []
+
 if RUBY_PLATFORM =~ /java/
   if ENV['TRAVIS'].to_s.empty?
     puts "Will build JAVA extension"
@@ -15,6 +17,8 @@ if RUBY_PLATFORM =~ /java/
     Rake::JavaExtensionTask.new "jcurl" do |ext|
       ext.lib_dir = "lib"
     end
+
+    tasks << :compile
   else
     puts "Not building jar or travis"
   end
@@ -25,6 +29,8 @@ else
   Rake::ExtensionTask.new "ccurl" do |ext|
     ext.lib_dir = "lib"
   end
+
+  tasks << :compile
 end
 
-task :default => [:compile, :test]
+task :default => tasks + [:test]
