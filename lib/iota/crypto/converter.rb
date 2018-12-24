@@ -81,7 +81,10 @@ module IOTA
 
           (0...trits.length).step(3) do |i|
             chunk = trits[i...i+3]
-            trytes += TRYTES_ALPHABET[TRYTE_TRITS.index(chunk)]
+            index = TRYTE_TRITS.index(chunk)
+            if !index.nil?
+              trytes += TRYTES_ALPHABET[index]
+            end
           end
 
           trytes
