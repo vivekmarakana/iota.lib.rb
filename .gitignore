@@ -13,4 +13,3 @@ Gemfile.lock
 Makefile
 *.bundle
 *.o
-*.jar
