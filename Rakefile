@@ -8,11 +8,19 @@ Rake::TestTask.new(:test) do |t|
 end
 
 if RUBY_PLATFORM =~ /java/
-  require 'rake/javaextensiontask'
-  Rake::JavaExtensionTask.new "jcurl" do |ext|
-    ext.lib_dir = "lib"
+  if ENV['TRAVIS'].to_s.empty?
+    puts "Will build JAVA extension"
+
+    require 'rake/javaextensiontask'
+    Rake::JavaExtensionTask.new "jcurl" do |ext|
+      ext.lib_dir = "lib"
+    end
+  else
+    puts "Not building jar or travis"
   end
 else
+  puts "Will build C extension"
+
   require 'rake/extensiontask'
   Rake::ExtensionTask.new "ccurl" do |ext|
     ext.lib_dir = "lib"
