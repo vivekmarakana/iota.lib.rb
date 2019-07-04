@@ -13,17 +13,25 @@ Gem::Specification.new do |spec|
   spec.description   = "Ruby gem for the IOTA core"
   spec.homepage      = "https://github.com/vivekmarakana/iota.lib.rb"
 
-  spec.files         = `git ls-files`.split("\n")
+  spec.files         = `git ls-files`.split("\n") - [ "lib/jcurl.jar"]
   spec.test_files    = `git ls-files -- test/*`.split("\n")
-  spec.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.extensions    = ["ext/ccurl/extconf.rb"]
 
-  spec.required_ruby_version = '>= 2.4.0'
-  spec.add_development_dependency "bundler", "~> 1.15"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "minitest", "~> 5.0"
-  spec.add_development_dependency "rake-compiler", "~> 1.0.4"
-  spec.add_dependency "digest-sha3", "~> 1.1"
-  spec.add_dependency "ffi", "~> 1.9.25"
+  if RUBY_PLATFORM =~ /java/
+    spec.platform      = "java"
+    spec.files         << "lib/jcurl.jar"
+  else
+    spec.extensions    = ["ext/ccurl/extconf.rb"]
+  end
+
+  spec.add_development_dependency "bundler", ">= 1.15"
+  spec.add_development_dependency "rake", ">= 10.0"
+  spec.add_development_dependency "minitest", ">= 5.0"
+  spec.add_development_dependency "rake-compiler", ">= 1.0.4"
+
+  unless RUBY_PLATFORM =~ /java/
+    spec.add_runtime_dependency "digest-sha3", "~> 1.1"
+  end
+
+  spec.add_runtime_dependency "ffi", "~> 1.9.25"
 end

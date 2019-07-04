@@ -66,21 +66,25 @@ static VALUE ccurl_absorb(VALUE self, VALUE data) {
 }
 
 static VALUE ccurl_squeeze(VALUE self, VALUE data) {
-  int length = NUM2INT(rb_funcall(data, rb_intern("length"), 0, 0));
+  int offset = 0;
   int i;
+  int length = NUM2INT(rb_funcall(data, rb_intern("length"), 0, 0));
 
   Curl *ctx;
   Data_Get_Struct(self, Curl, ctx);
 
-  for(; length < HASH_LENGTH; length++) {
-    rb_ary_push(data, LONG2NUM(0));
-  }
+  do {
+    for(; length < HASH_LENGTH; length++) {
+      rb_ary_push(data, LONG2NUM(0));
+    }
 
-  for (i = 0; i < HASH_LENGTH; i++) {
-    rb_ary_store(data, i, LONG2NUM(ctx->state[i]));
-  }
+    for (i = 0; i < HASH_LENGTH; i++) {
+      rb_ary_store(data, i, LONG2NUM(ctx->state[i]));
+    }
 
-  ccurl_transform(self);
+    ccurl_transform(self);
+    offset += HASH_LENGTH;
+  } while ((length -= HASH_LENGTH) > 0);
 
   return Qnil;
 }
