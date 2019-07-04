@@ -1,4 +1,4 @@
-## Upcoming
+## [1.1.8] - 2019-07-04
 - minor fixes in IOTA::Crypto::Converter.trytes
 - adding support for Rubinius
 - adding support for JRuby platforms with native curl function in Java
