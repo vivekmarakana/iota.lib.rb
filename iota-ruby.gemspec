@@ -24,10 +24,10 @@ Gem::Specification.new do |spec|
     spec.extensions    = ["ext/ccurl/extconf.rb"]
   end
 
-  spec.add_development_dependency "bundler", "~> 1.15"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "minitest", "~> 5.0"
-  spec.add_development_dependency "rake-compiler", "~> 1.0.4"
+  spec.add_development_dependency "bundler", ">= 1.15"
+  spec.add_development_dependency "rake", ">= 10.0"
+  spec.add_development_dependency "minitest", ">= 5.0"
+  spec.add_development_dependency "rake-compiler", ">= 1.0.4"
 
   unless RUBY_PLATFORM =~ /java/
     spec.add_runtime_dependency "digest-sha3", "~> 1.1"
