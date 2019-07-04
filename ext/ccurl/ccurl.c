@@ -5,6 +5,10 @@
 #define NUMBER_OF_ROUNDS 81
 #define STATE_LENGTH 3 * HASH_LENGTH
 
+#ifndef RARRAY_LEN
+#  define RARRAY_LEN(x) return (long)NUM2INT(rb_funcall(x, rb_intern("length"), 0));
+#endif
+
 typedef int64_t trit_t;
 
 #define __TRUTH_TABLE 1,  0, -1, 1, -1,  0, -1,  1,  0
@@ -43,7 +47,7 @@ static VALUE ccurl_absorb(VALUE self, VALUE data) {
   trit_t *trits;
   int offset = 0;
   int i;
-  int length = (int)rb_array_len(data);
+  int length = (int)RARRAY_LEN(data);
 
   Curl *ctx;
   Data_Get_Struct(self, Curl, ctx);
@@ -68,7 +72,7 @@ static VALUE ccurl_absorb(VALUE self, VALUE data) {
 static VALUE ccurl_squeeze(VALUE self, VALUE data) {
   int offset = 0;
   int i;
-  int length = (int)rb_array_len(data);
+  int length = (int)RARRAY_LEN(data);
 
   Curl *ctx;
   Data_Get_Struct(self, Curl, ctx);
