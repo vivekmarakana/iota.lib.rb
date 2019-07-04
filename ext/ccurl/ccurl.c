@@ -43,7 +43,7 @@ static VALUE ccurl_absorb(VALUE self, VALUE data) {
   trit_t *trits;
   int offset = 0;
   int i;
-  int length = NUM2INT(rb_funcall(data, rb_intern("length"), 0, 0));
+  int length = (int)rb_array_len(data);
 
   Curl *ctx;
   Data_Get_Struct(self, Curl, ctx);
@@ -68,7 +68,7 @@ static VALUE ccurl_absorb(VALUE self, VALUE data) {
 static VALUE ccurl_squeeze(VALUE self, VALUE data) {
   int offset = 0;
   int i;
-  int length = NUM2INT(rb_funcall(data, rb_intern("length"), 0, 0));
+  int length = (int)rb_array_len(data);
 
   Curl *ctx;
   Data_Get_Struct(self, Curl, ctx);
