@@ -1,5 +1,6 @@
-## [1.1.8] - 2019-07-04
+## [1.1.8] - 2019-07-15
 - minor fixes in IOTA::Crypto::Converter.trytes
+- Fixing some stuff in c extenstion to make it compatible with MRI ruby and Rubinius
 - adding support for Rubinius
 - adding support for JRuby platforms with native curl function in Java
 
