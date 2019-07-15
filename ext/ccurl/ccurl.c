@@ -5,6 +5,10 @@
 #define NUMBER_OF_ROUNDS 81
 #define STATE_LENGTH 3 * HASH_LENGTH
 
+#ifndef RARRAY_LEN
+#  define RARRAY_LEN(x) return (long)NUM2INT(rb_funcall(x, rb_intern("length"), 0));
+#endif
+
 typedef int64_t trit_t;
 
 #define __TRUTH_TABLE 1,  0, -1, 1, -1,  0, -1,  1,  0
@@ -43,7 +47,7 @@ static VALUE ccurl_absorb(VALUE self, VALUE data) {
   trit_t *trits;
   int offset = 0;
   int i;
-  int length = NUM2INT(rb_funcall(data, rb_intern("length"), 0, 0));
+  int length = (int)RARRAY_LEN(data);
 
   Curl *ctx;
   Data_Get_Struct(self, Curl, ctx);
@@ -66,21 +70,25 @@ static VALUE ccurl_absorb(VALUE self, VALUE data) {
 }
 
 static VALUE ccurl_squeeze(VALUE self, VALUE data) {
-  int length = NUM2INT(rb_funcall(data, rb_intern("length"), 0, 0));
+  int offset = 0;
   int i;
+  int length = (int)RARRAY_LEN(data);
 
   Curl *ctx;
   Data_Get_Struct(self, Curl, ctx);
 
-  for(; length < HASH_LENGTH; length++) {
-    rb_ary_push(data, LONG2NUM(0));
-  }
+  do {
+    for(; length < HASH_LENGTH; length++) {
+      rb_ary_push(data, LONG2NUM(0));
+    }
 
-  for (i = 0; i < HASH_LENGTH; i++) {
-    rb_ary_store(data, i, LONG2NUM(ctx->state[i]));
-  }
+    for (i = 0; i < HASH_LENGTH; i++) {
+      rb_ary_store(data, i, LONG2NUM(ctx->state[i]));
+    }
 
-  ccurl_transform(self);
+    ccurl_transform(self);
+    offset += HASH_LENGTH;
+  } while ((length -= HASH_LENGTH) > 0);
 
   return Qnil;
 }

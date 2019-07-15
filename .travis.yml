@@ -1,5 +1,7 @@
 sudo: false
 language: ruby
+dist: trusty
+osx_image: xcode9.3
 os:
   - linux
   - osx
@@ -7,4 +9,16 @@ rvm:
   - ruby-head
   - 2.5.1
   - 2.4.1
+  - jruby-head
+  - jruby-18mode
+  - jruby-19mode
+  - rbx-3
+matrix:
+  exclude:
+    - os: osx
+      rvm: rbx-3
+    - os: osx
+      rvm: ruby-head
+    - os: osx
+      rvm: jruby-head
 before_install: gem install bundler -v 1.15.0

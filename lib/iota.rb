@@ -1,3 +1,4 @@
+require "patch"
 require "iota/version"
 
 require "iota/utils/input_validator"
@@ -40,8 +41,6 @@ module IOTA
       @utils = IOTA::Utils::Utils.new
       @validator = @utils.validator
       @multisig = IOTA::Multisig::Multisig.new(self)
-      # TODO: Implement MAM
-      # TODO: Implement Flash Channel
     end
 
     def changeNode(settings = {})

@@ -1,9 +1,9 @@
-if !Dir.glob(File.join(File.dirname(__FILE__), '../../ccurl.*')).empty?
+if RUBY_PLATFORM =~ /java/
+  require "iota/crypto/curl_java"
+  BaseCurl = IOTA::Crypto::JCurl
+else
   require "iota/crypto/curl_c"
   BaseCurl = IOTA::Crypto::CCurl
-else
-  require "iota/crypto/curl_ruby"
-  BaseCurl = IOTA::Crypto::RubyCurl
 end
 
 module IOTA
