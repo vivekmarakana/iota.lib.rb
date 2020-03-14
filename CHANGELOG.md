@@ -1,3 +1,7 @@
+## [1.1.9] - 2020-03-14
+- adding `getMissingTransactions` API
+- adding `getNodeAPIConfiguration` API
+
 ## [1.1.8] - 2019-07-15
 - minor fixes in IOTA::Crypto::Converter.trytes
 - Fixing some stuff in c extenstion to make it compatible with MRI ruby and Rubinius
