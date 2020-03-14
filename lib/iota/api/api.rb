@@ -242,6 +242,14 @@ module IOTA
         sendBatchedCommand(command, &callback)
       end
 
+      def getNodeAPIConfiguration(&callback)
+        sendCommand(@commands.getNodeAPIConfiguration, &callback)
+      end
+
+      def getMissingTransactions(&callback)
+        sendCommand(@commands.getMissingTransactions, &callback)
+      end
+
       private
       def sendData(status, data, &callback)
         callback ? callback.call(status, data) : [status, data]

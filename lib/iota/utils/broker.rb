@@ -104,7 +104,8 @@ module IOTA
           'attachToTangle'        =>   'trytes',
           'checkConsistency'      =>   'state',
           'getBalances'           =>   'balances',
-          'wereAddressesSpentFrom'=>   'states'
+          'wereAddressesSpentFrom'=>   'states',
+          'getMissingTransactions'=>   'hashes'
         }
 
         # If correct result and we want to prepare the result

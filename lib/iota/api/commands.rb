@@ -108,6 +108,14 @@ module IOTA
           addresses: addresses
         }
       end
+
+      def getNodeAPIConfiguration
+        { command: 'getNodeAPIConfiguration' }
+      end
+
+      def getMissingTransactions
+        { command: 'getMissingTransactions' }
+      end
     end
   end
 end
