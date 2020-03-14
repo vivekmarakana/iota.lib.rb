@@ -33,5 +33,5 @@ Gem::Specification.new do |spec|
     spec.add_runtime_dependency "digest-sha3", "~> 1.1"
   end
 
-  spec.add_runtime_dependency "ffi", "~> 1.12.2"
+  spec.add_runtime_dependency "ffi", "~> 1.9.25"
 end
