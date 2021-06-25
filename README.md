@@ -1,3 +1,5 @@
+## This Gem only supports IOTA 1.0 APIs. Post-chrysalis apis are not yet supported.
+
 # IOTA Ruby Gem
 
 [![Build Status](https://travis-ci.org/vivekmarakana/iota.lib.rb.svg?branch=master)](https://travis-ci.org/vivekmarakana/iota.lib.rb) [![Gem Version](https://badge.fury.io/rb/iota-ruby.svg)](https://badge.fury.io/rb/iota-ruby) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/vivekmarakana/iota.lib.rb/master/LICENSE)
