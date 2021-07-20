@@ -1,4 +1,4 @@
-## This Gem only supports IOTA 1.0 APIs. Post-chrysalis apis are not yet supported.
+## [Archived Project] This Gem only supports IOTA 1.0 APIs. Post-chrysalis apis are not supported.
 
 # IOTA Ruby Gem
 
